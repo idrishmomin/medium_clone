@@ -1,16 +1,17 @@
+import { Auth } from "../components/Auth"
 import { Quote } from "../components/Quote"
 
 export const SignUp = () => {
     return <div>
 
-        <div className="display flex">
+        <div className="grid grid-cols-2">
             <div>
-                test
+                <Auth type={"signup"} />
             </div>
-            <div>
+            <div className="invisible md:visible">
                 <Quote />
             </div>
-        </div>
-
+        </div> 
+ 
     </div>
 }
