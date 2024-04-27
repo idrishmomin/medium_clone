@@ -29,11 +29,11 @@ export const BlogCard = ({
     </div>
 }
 
-export function AvatarComponent({ name }: { name: string }) {
+export function AvatarComponent({ name, size = 6 }: { name: string, size?: number }) {
     return <div>
 
-        <div className="relative inline-flex items-center justify-center w-6
-         h-6 overflow-hidden bg-gray-200 rounded-full dark:bg-gray-600">
+        <div className={`relative inline-flex items-center justify-center
+         w-${size} h-${size} overflow-hidden bg-gray-200 rounded-full dark:bg-gray-600`}>
             <span className="font-medium text-gray-600 dark:text-gray-300">{name[0]}</span>
         </div>
 
