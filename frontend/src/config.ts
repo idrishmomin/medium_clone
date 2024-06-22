@@ -1,1 +1,1 @@
-export const Backend_BASE_URL = "http://127.0.0.1:8787";
+export const Backend_BASE_URL = "https://medium_blog.idrishmomin2555.workers.dev";
