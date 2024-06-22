@@ -7,7 +7,7 @@ export const Appbar = () => {
             Medium
         </div>
         <div>
-            <AvatarComponent size={8} name="Idrish" />
+            <AvatarComponent size={"big"} name="Idrish" />
         </div>
     </div>
 }
