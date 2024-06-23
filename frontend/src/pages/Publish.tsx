@@ -12,7 +12,7 @@ export const Publish = () => {
 
     return <div>
         <Appbar />
-        <div className="pt-20 pl-80">
+        <div className="pt-40 pl-80">
             <div className="flex flex-col">
                 <input placeholder="Title" className="text-4xl outline-none font-serif" onChange={(e) => {
                     setTitle(e.target.value)

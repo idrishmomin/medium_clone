@@ -3,7 +3,7 @@ import { AvatarComponent } from "./BlogCard"
 
 export const Appbar = () => {
 
-    return <div className="border-b flex justify-between px-10 py-4">
+    return <div className="fixed top-0 left-0 right-0 border-b flex justify-between px-10 py-4 bg-white z-50">
         <div className="flex flex-col justify-center cursor-pointer">
             <Link to={"/blogs"}>Medium</Link>
         </div>
