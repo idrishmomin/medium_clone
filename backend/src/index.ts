@@ -1,17 +1,36 @@
 import { Hono } from 'hono'
-import { userRoute } from './routes/user';
-import { blogRoute } from './routes/blog';
-import {cors} from 'hono/cors';
+import { serve } from '@hono/node-server'
+import { userRoute } from './routes/user'
+import { blogRoute } from './routes/blog'
+import { cors } from 'hono/cors'
+import * as dotenv from 'dotenv'
 
-const app = new Hono();
+dotenv.config() // Load environment variables from .env
 
+// Initialize Hono app
+const app = new Hono<{
+  Bindings: {
+    DATABASE_URL: string
+    JWT_SECRET: string
+  }
+}>()
 
-app.use('/*',cors());
-app.route("/api/v1/user", userRoute);
-app.route("/api/v1/blog", blogRoute);
+// CORS middleware
+app.use('/*', cors())
 
-export default app
+// Directly access environment variables in routes
+app.use('*', async (c, next) => {
+  c.env.DATABASE_URL = process.env.DATABASE_URL || ''
+  c.env.JWT_SECRET = process.env.JWT_SECRET || ''
+  await next()
+})
 
-// mysql://avnadmin:AVNS_eb3teeYpA2nI7tcrbJO@mysql-2b8133a6-idrish2455-9c44.d.aivencloud.com:15134/defaultdb?ssl-mode=REQUIRED
+// Route binding function for user and blog routes
+app.route('/api/v1/user', userRoute)
+app.route('/api/v1/blog', blogRoute)
 
-// DATABASE_URL="prisma://accelerate.prisma-data.net/?api_key=eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJhcGlfa2V5IjoiOTFjNmYzYzQtMTE1NC00ZmNmLWI4NzItMDRkOGYzMTBlNjg2IiwidGVuYW50X2lkIjoiODM2MTBmYTQ4NmQ5MTJhMGMzZDVmOTA5N2ZhZDZjYTcwMTQzOTg3NzE1MGZjOGNjMDU1YTRhZDIwNGJkMjJiZiIsImludGVybmFsX3NlY3JldCI6IjM3OWFiZWVjLTFkMjItNDEyZi05Yzc3LWNmNjMyMjVmNmI1MiJ9.enZz3PD0H203sBFMU7yiLyAw-EMtoSmHuVt7beLYyrs"
+// Serve the application
+serve({
+  fetch: app.fetch,
+  port: 3000,
+})

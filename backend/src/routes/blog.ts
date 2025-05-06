@@ -1,5 +1,5 @@
 import { Hono } from "hono";
-import { PrismaClient } from '@prisma/client/edge'
+import { PrismaClient } from '@prisma/client'
 import { withAccelerate } from '@prisma/extension-accelerate'
 import { decode, verify } from "hono/jwt";
 import { blogInput, blogupdateInput } from "@idrishmomin/zodcommon";
@@ -17,7 +17,7 @@ export const blogRoute = new Hono<{
 
 blogRoute.use("/*", async (c, next) => {
     const autToken = c.req.header("authorization") || "";
-    const user = await verify(autToken, c.env.JWT_SECRET);
+    const user = await verify(autToken, c.env.JWT_SECRET)as { id: string };
 
     if (user) {
         c.set("authorId", user.id);
